@@ -1,0 +1,33 @@
+{
+    "uuid": "13D012E5-9C66-4092-BA1A-0445919CB0C3",
+    "type": "Homework",
+    "title": "Question examples from https://www.prairielearn.com",
+    "set": "Homework",
+    "number": "1",
+    "allowAccess": [
+        {
+            "mode": "Public",
+	    "credit": 100,
+	    "startDate": "2021-02-02T00:00:01",
+	    "endDate": "2021-02-10T23:59:59"
+        }
+    ],
+    "zones": [
+        {
+            "title": "Proof YAML Input (pl-proof-yaml)",
+            "questions": [
+                {"id": "ProofYaml/singleFileFromCourse","points": 1},
+                {"id": "ProofYaml/proofCollectionIndex","points": 1},
+                {"id": "ProofYaml/questionLocalDevelopment","points": 1},
+                {
+                    "id": "ProofYaml/preferenceSelectedProof",
+                    "points": 1,
+                    "preferences": {
+                        "proof_file": "public_examples/even-sum.proof"
+                    }
+                }
+            ]
+        }
+    ],
+    "text": "<p><strong>Comments about this assessment:</strong> </p><p> This assessment includes examples from the question gallery at <a href=https://www.prairielearn.com/gallery>https://www.prairielearn.com</a>.</p>"
+}

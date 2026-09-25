@@ -1,0 +1,44 @@
+[project]
+name = "pl-proof-yaml"
+version = "0.1.0"
+description = "A PrairieLearn element for interactive proof reconstruction from YAML."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["prairielearn", "chevron"]
+
+[tool.uv]
+package = true
+
+[tool.uv.sources.prairielearn]
+git = "https://github.com/PrairieLearn/PrairieLearn.git"
+subdirectory = "apps/prairielearn/python"
+
+[tool.setuptools.packages.find]
+where = ["elements/pl-proof-yaml"]
+include = ["pl_proof_yaml*"]
+
+[tool.setuptools.package-data]
+pl_proof_yaml = ["*.mustache", "schemas/*.json"]
+
+[tool.pyright]
+extraPaths = ["elements/pl-proof-yaml"]
+venvPath = "."
+venv = ".venv"
+reportMissingModuleSource = false
+
+[tool.pl-vendor]
+required-version = "^0.4"
+
+[tool.pl-vendor.packages.pyyaml]
+path = "elements/pl-proof-yaml/pl_proof_yaml/proof_yaml_parser/yaml"
+url = "https://github.com/yaml/pyyaml.git"
+commit = "49790e73684bebad1df05ef8d828fa12f685bffb"
+subdirectory = "lib/yaml"
+
+[dependency-groups]
+dev = [
+    "pyfakefs>=6.2.0",
+    "pytest>=9.1.1",
+    "lxml",
+    "pl-vendor>=0.4.5,<0.5",
+]

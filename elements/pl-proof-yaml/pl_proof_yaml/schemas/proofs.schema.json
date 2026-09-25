@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/proofs.schema.json",
+  "title": "ProofDB proof collection YAML",
+  "description": "a listing of proofs",
+  "oneOf": [
+    {
+      "$ref": "proof.schema.json#/definitions/theoremList"
+    },
+    {
+      "$ref": "proof.schema.json#/definitions/theoremMap"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "uuid": "e0131744-c9a4-4a2b-9235-219f37d4df97",
+  "title": "Proof YAML: assessment-selected proof",
+  "topic": "ProofYaml",
+  "type": "v3",
+  "tags": ["pl-proof-yaml"],
+  "preferences": {
+    "proof_file": {
+      "type": "string",
+      "default": "public_examples/even-product.proof"
+    }
+  }
+}

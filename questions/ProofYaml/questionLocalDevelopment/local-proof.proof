@@ -1,0 +1,36 @@
+problem: For any integer $n$, if $n$ is odd, then $n^2$ is odd.
+defaults:
+  depends: previous
+lines:
+  - step: Let BLANK be an integer and assume $n$ is odd.
+    correct: $n$
+    incorrect:
+      - $n^2$
+      - $k$
+    defines: $n$
+  - step: Since $n$ is odd, BLANK for some integer $k$.
+    correct: $n = 2k + 1$
+    incorrect:
+      - $n = 2k$
+      - $n = k + 1$
+    defines: $k$
+  - step: Squaring both sides gives BLANK.
+    correct: $n^2 = (2k + 1)^2$
+    incorrect:
+      - $n^2 = 2k^2 + 1$
+      - $n = (2k + 1)^2$
+  - step: Expanding gives BLANK.
+    correct: $n^2 = 4k^2 + 4k + 1$
+    incorrect:
+      - $n^2 = 4k^2 + 1$
+      - $n^2 = 2k^2 + 2k + 1$
+  - step: Factoring gives BLANK.
+    correct: $n^2 = 2(2k^2 + 2k) + 1$
+    incorrect:
+      - $n^2 = 2(k^2 + k) + 1$
+      - $n^2 = 2(2k^2 + 2k)$
+  - step: Because $2k^2 + 2k$ is an integer, BLANK.
+    correct: $n^2$ is odd
+    incorrect:
+      - $n^2$ is even
+      - $n$ is odd

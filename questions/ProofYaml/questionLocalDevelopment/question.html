@@ -1,0 +1,22 @@
+<pl-question-panel>
+  <p>
+    Reconstruct a short direct proof about odd integers.
+  </p>
+  <p>
+    This demo loads <code>local-proof.proof</code> from the question directory, which makes it a convenient
+    playground while developing the element.
+  </p>
+</pl-question-panel>
+
+<pl-proof-yaml
+  answers-name="proof"
+  proof-file="local-proof.proof"
+  directory="question"
+  grading-method="dag"
+  source-blocks-order="random"
+  partial-credit="lcs"
+  feedback="first-wrong"
+  source-header="Available lines"
+  solution-header="Your proof"
+  solution-placement="right"
+></pl-proof-yaml>

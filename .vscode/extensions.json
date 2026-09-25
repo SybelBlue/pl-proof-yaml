@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "redhat.vscode-yaml",
+    "esbenp.prettier-vscode",
+    "ms-vscode.makefile-tools",
+    "reteps.htmlmustache-lsp",
+  ]
+}

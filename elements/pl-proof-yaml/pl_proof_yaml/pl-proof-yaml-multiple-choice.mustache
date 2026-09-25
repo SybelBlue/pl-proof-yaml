@@ -1,0 +1,10 @@
+<pl-multiple-choice
+  answers-name="{{answers_name}}"
+  display="dropdown"
+  order="random"
+  hide-letter-keys="true"
+  size="{{width_ch}}"
+  {{#allow_blank}}allow-blank="true"{{/allow_blank}}
+>
+  {{#choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/choices}}
+</pl-multiple-choice>

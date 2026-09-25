@@ -1,0 +1,49 @@
+{
+  "yaml.schemas": {
+    "./elements/pl-proof-yaml/pl_proof_yaml/schemas/proof.schema.json": [
+      "/**/*.proof",
+      "/**/*.proof.yaml"
+    ],
+    "./elements/pl-proof-yaml/pl_proof_yaml/schemas/proofs.schema.json": [
+      "/**/*.proofs",
+      "/**/*.proofs.yaml"
+    ],
+    "./elements/pl-proof-yaml/pl_proof_yaml/schemas/manifest.schema.json": [
+      "/**/*.manifest",
+      "/**/*.manifest.yaml"
+    ]
+  },
+  "files.associations": {
+    "*.proof": "yaml",
+    "*.proofs": "yaml",
+    "*.manifest": "yaml",
+
+    // from pl
+    "**/questions/**/question.html": "htmlmustache",
+  },
+  // Copied form pl
+  "prettier.configPath": "./.prettierrc.json",
+
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[html][css][scss][json][jsonc][yaml][github-actions-workflow][sql][markdown][toml][shellscript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "files.insertFinalNewline": true
+  },
+  "json.schemaDownload.enable": true,
+  "json.schemas": [],
+  // This conflicts with the Prettier formatter, so we disable it.
+  "yaml.format.enable": false,
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  }
+}

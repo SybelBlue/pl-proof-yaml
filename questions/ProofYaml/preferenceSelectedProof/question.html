@@ -1,0 +1,19 @@
+<pl-question-panel>
+  <p>
+    This proof file was selected by the assessment's <code>preferences.proof_file</code> value
+    (<code>{{preferences.proof_file}}</code>).
+  </p>
+</pl-question-panel>
+
+<pl-proof-yaml
+  answers-name="proof"
+  proof-file="{{preferences.proof_file}}"
+  directory="serverFilesCourse"
+  grading-method="dag"
+  source-blocks-order="random-sections"
+  partial-credit="lcs"
+  feedback="first-wrong"
+  source-header="Available proof lines"
+  solution-header="Ordered proof"
+  solution-placement="right"
+></pl-proof-yaml>

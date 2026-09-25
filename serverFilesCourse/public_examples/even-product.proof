@@ -1,0 +1,16 @@
+problem: The product of an even integer and any integer is even.
+defaults:
+  depends: previous
+lines:
+  - Let $a$ be even and let $b$ be an integer.
+  - step: Since $a$ is even, BLANK for some integer $k$.
+    correct: $a = 2k$
+    incorrect:
+      - $a = 2k + 1$
+      - $a = k$
+  - step: It follows that BLANK.
+    correct: $ab = 2(kb)$
+    incorrect:
+      - $ab = 2k + b$
+      - $ab = k(2 + b)$
+  - Since $kb$ is an integer, $ab$ is even.

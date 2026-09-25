@@ -1,0 +1,45 @@
+- problem: If $n$ is odd, then $n^2$ is odd.
+  defaults:
+    depends: previous
+  lines:
+    - step: Let $n$ be odd, so BLANK for some integer $k$.
+      correct: $n = 2k + 1$
+      incorrect:
+        - $n = 2k$
+        - $n = k + 1$
+    - step: Squaring and expanding gives BLANK.
+      correct: $n^2 = 4k^2 + 4k + 1$
+      incorrect: $n^2 = 4k^2 + 1$
+    - step: Therefore $n^2 = 2(2k^2 + 2k) + 1$, so $n^2$ is odd.
+- problem: The sum of two even integers is even.
+  defaults:
+    depends: previous
+  lines:
+    - Let $a$ and $b$ be even integers.
+    - step: Then BLANK for some integers $m$ and $n$.
+      correct: $a = 2m$ and $b = 2n$
+      incorrect:
+        - $a = 2m + 1$ and $b = 2n + 1$
+        - $a = m$ and $b = n$
+    - step: Adding these equations gives BLANK.
+      correct: $a + b = 2(m + n)$
+      incorrect:
+        - $a + b = 2mn$
+        - $a + b = m + n$
+    - Since $m + n$ is an integer, $a + b$ is even.
+- problem: The product of an even integer and any integer is even.
+  defaults:
+    depends: previous
+  lines:
+    - Let $a$ be even and let $b$ be an integer.
+    - step: Since $a$ is even, BLANK for some integer $k$.
+      correct: $a = 2k$
+      incorrect:
+        - $a = 2k + 1$
+        - $a = k$
+    - step: It follows that BLANK.
+      correct: $ab = 2(kb)$
+      incorrect:
+        - $ab = 2k + b$
+        - $ab = k(2 + b)$
+    - Since $kb$ is an integer, $ab$ is even.

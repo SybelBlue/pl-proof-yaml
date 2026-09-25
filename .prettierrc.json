@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/prettierrc.json",
+  "singleQuote": true,
+  "printWidth": 100,
+  "plugins": [],
+  "overrides": [
+    { "files": "*.jsonc", "options": { "trailingComma": "none" } },
+    { "files": "*.proof,*.proofs,*.manifest", "options": { "parser": "yaml" } }
+  ]
+}

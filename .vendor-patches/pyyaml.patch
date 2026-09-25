@@ -1,0 +1,17 @@
+diff --git a/cyaml.py b/cyaml.py
+--- a/cyaml.py
++++ b/cyaml.py
+@@ -5,7 +5,7 @@ __all__ = [
+     'CBaseDumper', 'CSafeDumper', 'CDumper'
+ ]
+ 
+-from yaml._yaml import CParser, CEmitter
++from ._yaml import CParser, CEmitter
+ 
+ from .constructor import *
+ 
+@@ -98,4 +98,3 @@ class CDumper(CEmitter, Serializer, Representer, Resolver):
+         Representer.__init__(self, default_style=default_style,
+                 default_flow_style=default_flow_style, sort_keys=sort_keys)
+         Resolver.__init__(self)
+-

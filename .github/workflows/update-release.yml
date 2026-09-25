@@ -1,0 +1,28 @@
+name: Update release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-release
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch the current release branch
+        run: git fetch origin refs/heads/release:refs/remotes/origin/release || true
+
+      - name: Rebuild and push release
+        run: ./scripts/update-release.sh --push

@@ -1,0 +1,508 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/proof.schema.json",
+  "title": "ProofDB single proof YAML",
+  "description": "a single proof",
+  "$ref": "#/definitions/theorem",
+  "definitions": {
+    "proofDbManifest": {
+      "type": "object",
+      "required": ["proofs"],
+      "properties": {
+        "proofs": {
+          "description": "Proof files included by this manifest.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "\\.proof(\\.yaml)?$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "theoremList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/theorem"
+      }
+    },
+    "theoremMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/theorem"
+      }
+    },
+    "theorem": {
+      "type": "object",
+      "required": ["problem", "lines"],
+      "properties": {
+        "problem": {
+          "description": "Statement of the theorem to prove.",
+          "type": "string"
+        },
+        "hint": {
+          "description": "Optional hint shown with the proof.",
+          "type": "string"
+        },
+        "lines": {
+          "description": "Lines that make up the proof.",
+          "$ref": "#/definitions/lineCollection"
+        },
+        "defaults": {
+          "description": "Default properties applied to each proof line.",
+          "$ref": "#/definitions/theoremDefaults"
+        },
+        "distractors": {
+          "description": "Unlinked, global distractor lines.",
+          "$ref": "#/definitions/distractorCollection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "theoremDefaults": {
+      "type": "object",
+      "properties": {
+        "step": {
+          "description": "Default text for proof lines.",
+          "type": "string"
+        },
+        "depends": {
+          "description": "Default dependencies for proof lines.",
+          "$ref": "#/definitions/depends"
+        },
+        "dependents": {
+          "description": "Default dependent-line behavior.",
+          "$ref": "#/definitions/dependents"
+        },
+        "defines": {
+          "description": "Default identifiers defined by proof lines.",
+          "$ref": "#/definitions/defines"
+        },
+        "label": {
+          "description": "Legacy alias for defines.",
+          "$ref": "#/definitions/defines"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineCollection": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/lineList"
+        },
+        {
+          "$ref": "#/definitions/lineMap"
+        }
+      ]
+    },
+    "distractorCollection": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/distractorLine"
+      }
+    },
+    "distractorLine": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/distractorShorthandLine"
+        },
+        {
+          "$ref": "#/definitions/distractorNamedBlankLine"
+        }
+      ]
+    },
+    "distractorShorthandLine": {
+      "type": "object",
+      "required": ["step"],
+      "properties": {
+        "step": {
+          "description": "Text displayed for this distractor.",
+          "type": "string"
+        },
+        "correct": {
+          "description": "Correct answer for the single BLANK.",
+          "$ref": "#/definitions/correctValue"
+        },
+        "incorrect": {
+          "description": "Incorrect choices for the single BLANK.",
+          "$ref": "#/definitions/incorrectValue"
+        }
+      },
+      "additionalProperties": false
+    },
+    "distractorNamedBlankLine": {
+      "type": "object",
+      "required": ["step", "blanks"],
+      "properties": {
+        "step": {
+          "description": "Text containing the named blank markers.",
+          "type": "string"
+        },
+        "blanks": {
+          "description": "Answer definitions keyed by blank name.",
+          "$ref": "#/definitions/namedBlanks"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/line"
+      }
+    },
+    "lineMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/line"
+      }
+    },
+    "line": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/subgoalLine"
+        },
+        {
+          "$ref": "#/definitions/shorthandLine"
+        },
+        {
+          "$ref": "#/definitions/namedBlankLine"
+        }
+      ]
+    },
+    "subgoalLine": {
+      "type": "object",
+      "required": ["subgoal", "lines"],
+      "properties": {
+        "subgoal": {
+          "description": "Heading for the nested subproof.",
+          "type": "string"
+        },
+        "lines": {
+          "description": "Lines contained in the subproof.",
+          "$ref": "#/definitions/lineCollection"
+        },
+        "depends": {
+          "description": "Lines required by this subgoal.",
+          "$ref": "#/definitions/depends"
+        },
+        "dependents": {
+          "description": "How later lines depend on this subgoal.",
+          "$ref": "#/definitions/dependents"
+        },
+        "defines": {
+          "description": "Identifiers introduced by this subgoal.",
+          "$ref": "#/definitions/defines"
+        },
+        "label": {
+          "description": "Legacy alias for defines.",
+          "$ref": "#/definitions/defines"
+        }
+      },
+      "additionalProperties": false
+    },
+    "shorthandLine": {
+      "type": "object",
+      "required": ["step"],
+      "properties": {
+        "step": {
+          "description": "Text displayed for this proof line.",
+          "type": "string"
+        },
+        "depends": {
+          "description": "Lines required by this proof line.",
+          "$ref": "#/definitions/depends"
+        },
+        "dependents": {
+          "description": "How later lines depend on this proof line. (Use depends on that line instead, if possible.)",
+          "$ref": "#/definitions/dependents"
+        },
+        "defines": {
+          "description": "Identifiers introduced by this proof line.",
+          "$ref": "#/definitions/defines"
+        },
+        "label": {
+          "description": "Alias for defines.",
+          "$ref": "#/definitions/defines"
+        },
+        "correct": {
+          "description": "Correct answer for the single BLANK.",
+          "$ref": "#/definitions/correctValue"
+        },
+        "incorrect": {
+          "description": "Incorrect choices for the single BLANK.",
+          "$ref": "#/definitions/incorrectValue"
+        },
+        "subgoal": {
+          "description": "Lines nested beneath this proof line.",
+          "$ref": "#/definitions/lineCollection"
+        },
+        "distractors": {
+          "description": "Distractor lines for this line.",
+          "$ref": "#/definitions/distractorCollection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "namedBlankLine": {
+      "type": "object",
+      "required": ["step", "blanks"],
+      "properties": {
+        "step": {
+          "description": "Text containing the named blank markers.",
+          "type": "string"
+        },
+        "depends": {
+          "description": "Lines required by this proof line.",
+          "$ref": "#/definitions/depends"
+        },
+        "dependents": {
+          "description": "How later lines depend on this proof line. (Use depends on that line instead, if possible.)",
+          "$ref": "#/definitions/dependents"
+        },
+        "defines": {
+          "description": "Identifiers introduced by this proof line.",
+          "$ref": "#/definitions/defines"
+        },
+        "label": {
+          "description": "Alias for defines.",
+          "$ref": "#/definitions/defines"
+        },
+        "subgoal": {
+          "description": "Lines nested beneath this proof line.",
+          "$ref": "#/definitions/lineCollection"
+        },
+        "blanks": {
+          "description": "Answer definitions keyed by blank name.",
+          "$ref": "#/definitions/namedBlanks"
+        },
+        "distractors": {
+          "description": "Distractor lines for this line.",
+          "$ref": "#/definitions/distractorCollection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "namedBlanks": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/definitions/blankEntry",
+        "description": "The blank placeholder in this line's step."
+      }
+    },
+    "blankEntry": {
+      "type": "object",
+      "required": ["correct"],
+      "properties": {
+        "correct": {
+          "description": "Correct answer for this blank.",
+          "$ref": "#/definitions/correctValue"
+        },
+        "incorrect": {
+          "description": "Incorrect choices for this blank.",
+          "$ref": "#/definitions/incorrectValue"
+        }
+      },
+      "additionalProperties": true
+    },
+    "correctValue": {
+      "type": ["string", "integer"]
+    },
+    "incorrectValue": {
+      "oneOf": [
+        {
+          "type": ["string", "integer"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": ["string", "integer"]
+          }
+        }
+      ]
+    },
+    "dependents": {
+      "type": "string",
+      "enum": ["all below", "all-below"]
+    },
+    "defines": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": ["string", "number", "integer"]
+          }
+        }
+      ]
+    },
+    "depends": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/dependsCore"
+        },
+        {
+          "type": "object",
+          "required": ["anyOf"],
+          "properties": {
+            "anyOf": {
+              "description": "Correct if at least one of the listed dependencies is satisfied.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/dependsCore"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "dependsCore": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:(?!previous:).)*$"
+        },
+        {
+          "type": "string",
+          "pattern": "^previous:\\s*(all|[0-9]+)$"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dependsItem"
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "previous": {
+              "description": "Number of immediately preceding lines required.",
+              "$ref": "#/definitions/previousValue"
+            },
+            "names": {
+              "description": "Named lines required by this line.",
+              "$ref": "#/definitions/namesValue"
+            },
+            "lines": {
+              "description": "Numbered lines required by this line.",
+              "$ref": "#/definitions/linesValue"
+            },
+            "all-previous": {
+              "description": "Require all preceding lines."
+            },
+            "all previous": {
+              "description": "Require all preceding lines."
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "dependsItem": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "previous": {
+              "description": "Number of immediately preceding lines required.",
+              "$ref": "#/definitions/previousValue"
+            },
+            "names": {
+              "description": "Named lines required by this line.",
+              "$ref": "#/definitions/namesValue"
+            },
+            "lines": {
+              "description": "Numbered lines required by this line.",
+              "$ref": "#/definitions/linesValue"
+            },
+            "all-previous": {
+              "description": "Require all preceding lines."
+            },
+            "all previous": {
+              "description": "Require all preceding lines."
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "previousValue": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(all|[0-9]+)$"
+        },
+        {
+          "type": "integer"
+        }
+      ]
+    },
+    "namesValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "linesValue": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string",
+                "pattern": "^[0-9]+$"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

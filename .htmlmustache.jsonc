@@ -1,0 +1,2021 @@
+{
+  "include": [
+    "**/*.mustache",
+    "**/question.html"
+  ],
+  "rules": {
+    "preferMustacheComments": "warning",
+    "customTagSchema": "error",
+    "unrecognizedHtmlTags": "warning"
+  },
+  "customRules": [
+    {
+      "id": "pl-no-relative-client-files-question",
+      "selector": "[src*=\"clientFilesQuestion/\"], [href*=\"clientFilesQuestion/\"], [srcset*=\"clientFilesQuestion/\"], [poster*=\"clientFilesQuestion/\"], [data*=\"clientFilesQuestion/\"], [style*=\"clientFilesQuestion/\"]",
+      "message": "Relative clientFilesQuestion paths are not recommended. See https://docs.prairielearn.com/clientServerFiles/.",
+      "severity": "warning"
+    },
+    {
+      "id": "pl-no-relative-client-files-course",
+      "selector": "[src*=\"clientFilesCourse/\"], [href*=\"clientFilesCourse/\"], [srcset*=\"clientFilesCourse/\"], [poster*=\"clientFilesCourse/\"], [data*=\"clientFilesCourse/\"], [style*=\"clientFilesCourse/\"]",
+      "message": "Relative clientFilesCourse paths are not recommended. See https://docs.prairielearn.com/clientServerFiles/.",
+      "severity": "warning"
+    },
+    {
+      "id": "pl-deprecated-dropdown",
+      "selector": "pl-dropdown",
+      "message": "pl-dropdown is deprecated. Migrate to pl-multiple-choice with display=\"dropdown\" or pl-matching. See https://docs.prairielearn.com/elements/pl-multiple-choice/."
+    },
+    {
+      "id": "pl-deprecated-prairiedraw-figure",
+      "selector": "pl-prairiedraw-figure",
+      "message": "pl-prairiedraw-figure is deprecated. Migrate to pl-drawing or server-rendered figures. See https://docs.prairielearn.com/elements/pl-drawing/."
+    },
+    {
+      "id": "pl-deprecated-variable-score",
+      "selector": "pl-variable-score",
+      "message": "pl-variable-score is deprecated. v3 submission elements have built-in score display options."
+    },
+    {
+      "id": "pl-deprecated-matrix-output",
+      "selector": "pl-matrix-output",
+      "message": "pl-matrix-output is deprecated. Migrate to pl-variable-output. See https://docs.prairielearn.com/elements/pl-variable-output/."
+    },
+    {
+      "id": "pl-deprecated-variable-output-child",
+      "selector": "pl-variable-output variable",
+      "message": "variable children in pl-variable-output are deprecated. Migrate to pl-variable. See https://docs.prairielearn.com/elements/pl-variable-output/."
+    },
+    {
+      "id": "pl-dropdown-hide-letter-keys",
+      "selector": "pl-multiple-choice[display=\"dropdown\"]:not([hide-letter-keys=\"true\"])",
+      "message": "Dropdown multiple choice must set hide-letter-keys=\"true\".",
+      "severity": "warning"
+    },
+    {
+      "id": "pl-dropdown-number-answers",
+      "selector": "pl-multiple-choice:not([number-answers=\"2\"]):not([number-answers=\"3\"]):has( pl-answer + pl-answer + pl-answer + pl-answer)",
+      "message": "Dropdown multiple choice with 4 or more answers must set number-answers=\"2\" or \"3\".",
+      "severity": "warning"
+    },
+    {
+      "id": "pl-prefer-pl-inputs",
+      "selector": "input, textarea, select",
+      "message": "Prefer PrairieLearn input elements over raw HTML form inputs."
+    },
+    {
+      "id": "pl-require-img-alt",
+      "selector": "img:not([alt]),img[alt='']",
+      "message": "Images must have alt-text in order to be ADA compliant"
+    },
+    {
+      "id": "pl-prefer-pl-figure",
+      "selector": "img:not([style]):not([class]):not(pl-overlay img)",
+      "message": "Prefer pl-figure over raw <img> tags. See https://docs.prairielearn.com/elements/pl-figure/."
+    },
+    {
+      "id": "pl-submission-only-in-wrong-panel",
+      "selector": ":is(pl-question-panel, pl-answer-panel) :is(pl-external-grader-results, pl-file-preview)",
+      "message": "pl-external-grader-results and pl-file-preview should only appear inside pl-submission-panel."
+    },
+    {
+      "id": "pl-nested-panels",
+      "selector": ":is(pl-question-panel, pl-answer-panel, pl-submission-panel) :is(pl-question-panel, pl-answer-panel, pl-submission-panel)",
+      "message": "Panel elements (pl-question-panel, pl-answer-panel, pl-submission-panel) should not be nested inside another panel."
+    },
+    {
+      "id": "pl-multiple-file-upload",
+      "selector": "*:has(pl-file-upload) ~ * pl-file-upload, pl-file-upload ~ pl-file-upload",
+      "message": "Prefer a single pl-file-upload per question; collecting all files in one place is clearer for students than splitting them across multiple upload boxes.",
+      "severity": "warning"
+    },
+    {
+      "id": "pl-input-missing-answers-name",
+      "selector": "pl-big-o-input:not([answers-name]), pl-checkbox:not([answers-name]), pl-excalidraw:not([gradable=\"false\"]):not([answers-name]), pl-integer-input:not([answers-name]), pl-matching:not([answers-name]), pl-matrix-component-input:not([answers-name]), pl-matrix-input:not([answers-name]), pl-multiple-choice:not([answers-name]), pl-number-input:not([answers-name]), pl-order-blocks:not([answers-name]), pl-string-input:not([answers-name]), pl-symbolic-input:not([answers-name]), pl-units-input:not([answers-name])",
+      "message": "Input element is missing the required `answers-name` attribute."
+    },
+    {
+      "id": "pl-raw-submitted-answer",
+      "selector": "{{{submitted_answers.*}}}, {{{raw_submitted_answers.*}}}",
+      "message": "Rendering submitted answers with triple-brace mustache emits unescaped user content and is an XSS risk. See https://docs.prairielearn.com/elements/pl-xss-safe/."
+    },
+    {
+      "id": "pl-prefer-pl-file-download",
+      "selector": "a[href*=\"client_files_course_url\"], a[href*=\"client_files_question_url\"], a[href*=\"client_files_question_dynamic_url\"]",
+      "message": "Prefer pl-file-download over a plain <a> tag for links to course or question resources. See https://docs.prairielearn.com/elements/pl-file-download/.",
+      "severity": "warning"
+    },
+    {
+      "id": "pl-input-in-panel",
+      "selector": ":is(pl-question-panel, pl-answer-panel, pl-submission-panel) :is(pl-big-o-input, pl-excalidraw:not([gradable=\"false\"]), pl-image-capture, pl-integer-input, pl-matching, pl-matrix-component-input, pl-matrix-input, pl-checkbox, pl-multiple-choice, pl-order-blocks, pl-number-input, pl-rich-text-editor, pl-string-input, pl-symbolic-input, pl-units-input)",
+      "message": "Input elements must not be nested inside pl-question-panel, pl-answer-panel, or pl-submission-panel. Place them as siblings of the panel instead."
+    }
+  ],
+  "printWidth": 100,
+  "noBreakDelimiters": [
+    {
+      "start": "$",
+      "end": "$"
+    },
+    {
+      "start": "$$",
+      "end": "$$"
+    },
+    {
+      "start": "\\(",
+      "end": "\\)"
+    },
+    {
+      "start": "\\[",
+      "end": "\\]"
+    }
+  ],
+  // NOTE: last schema pull was  Codex on 5/28/2026
+  "customTags": [
+    {
+      "name": "pl-code",
+      "display": "block",
+      "languageAttribute": "language",
+      "indent": "attribute",
+      "indentAttribute": "normalize-whitespace",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "copy-code-button": {},
+          "directory": {},
+          "highlight-lines": {},
+          "highlight-lines-color": {},
+          "language": {},
+          "normalize-whitespace": {},
+          "prevent-select": {},
+          "show-line-numbers": {},
+          "source-file-name": {},
+          "style-name": {}
+        }
+      }
+    },
+    {
+      "name": "pl-file-editor",
+      "display": "block",
+      "languageAttribute": "ace-mode",
+      "languageMap": {
+        "ace/mode/python": "python",
+        "ace/mode/c_cpp": "c",
+        "ace/mode/java": "java",
+        "ace/mode/html": "html",
+        "ace/mode/markdown": "markdown",
+        "ace/mode/r": "r",
+        "ace/mode/dot": "dot",
+        "ace/mode/javascript": "javascript",
+        "ace/mode/typescript": "typescript",
+        "ace/mode/sql": "sql",
+        "ace/mode/json": "json",
+        "ace/mode/xml": "xml",
+        "ace/mode/yaml": "yaml",
+        "ace/mode/css": "css",
+        "ace/mode/sh": "bash"
+      },
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["file-name"],
+        "properties": {
+          "ace-mode": {},
+          "ace-theme": {},
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "auto-resize": {
+            "enum": ["true", "false"]
+          },
+          "directory": {},
+          "file-name": {},
+          "focus": {
+            "enum": ["true", "false"]
+          },
+          "font-size": {},
+          "max-lines": {},
+          "min-lines": {},
+          "normalize-to-ascii": {
+            "enum": ["true", "false"]
+          },
+          "preview": {
+            "enum": ["dot", "html", "markdown"]
+          },
+          "source-file-name": {}
+        }
+      }
+    },
+    {
+      "name": "pl-rich-text-editor",
+      "display": "block",
+      "languageAttribute": "format",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "clipboard-enabled": {
+            "enum": ["true", "false"]
+          },
+          "counter": {
+            "enum": ["character", "none", "word"]
+          },
+          "directory": {},
+          "file-name": {},
+          "format": {
+            "enum": ["html", "markdown"]
+          },
+          "markdown-shortcuts": {
+            "enum": ["true", "false"]
+          },
+          "max-word-count": {},
+          "min-word-count": {},
+          "placeholder": {},
+          "quill-theme": {},
+          "source-file-name": {}
+        }
+      }
+    },
+    {
+      "name": "markdown",
+      "display": "block",
+      "languageDefault": "markdown"
+    },
+    {
+      "name": "pl-graph",
+      "display": "block",
+      "languageDefault": "dot",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "directed": {},
+          "directory": {},
+          "engine": {
+            "enum": [
+              "circo",
+              "dot",
+              "fdp",
+              "neato",
+              "osage",
+              "twopi"
+            ]
+          },
+          "log-warnings": {},
+          "negative-weights": {},
+          "params-name": {},
+          "params-name-labels": {},
+          "params-type": {},
+          "source-file-name": {},
+          "weights": {},
+          "weights-digits": {},
+          "weights-presentation-type": {}
+        }
+      }
+    },
+    {
+      "name": "pl-question-panel",
+      "display": "block"
+    },
+    {
+      "name": "pl-submission-panel",
+      "display": "block"
+    },
+    {
+      "name": "pl-answer-panel",
+      "display": "block"
+    },
+    // Submission
+    {
+      "name": "pl-big-o-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "blank-value": {},
+          "correct-answer": {},
+          "display": {
+            "enum": ["block", "inline"]
+          },
+          "initial-value": {},
+          "placeholder": {},
+          "show-help-text": {
+            "enum": ["true", "false"]
+          },
+          "show-score": {
+            "enum": ["true", "false"]
+          },
+          "size": {},
+          "type": {
+            "enum": ["big-o", "little-o", "little-omega", "omega", "theta"]
+          },
+          "variables": {},
+          "weight": {}
+        }
+      }
+    },
+    {
+      "name": "pl-excalidraw",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "anyOf": [
+          {
+            "properties": {
+              "gradable": {
+                "enum": ["false"]
+              }
+            },
+            "required": ["gradable"]
+          },
+          {
+            "required": ["answers-name"]
+          }
+        ],
+        "properties": {
+          "answers-name": {},
+          "directory": {},
+          "gradable": {
+            "enum": ["false", "true"]
+          },
+          "height": {},
+          "source-file-name": {},
+          "width": {}
+        }
+      }
+    },
+    {
+      "name": "pl-file-upload",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "anyOf": [
+          {
+            "required": ["file-names"]
+          },
+          {
+            "required": ["file-patterns"]
+          },
+          {
+            "required": ["optional-file-names"]
+          },
+          {
+            "required": ["optional-file-patterns"]
+          }
+        ],
+        "properties": {
+          "file-names": {},
+          "file-patterns": {},
+          "optional-file-names": {},
+          "optional-file-patterns": {}
+        }
+      }
+    },
+    {
+      "name": "pl-image-capture",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["file-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "file-name": {
+            "pattern": "^.+\\.(?:jpe?g)$",
+            "errorMessage": "pl-image-capture file-name must end with .jpg or .jpeg."
+          },
+          "manual-upload-enabled": {
+            "enum": ["true", "false"]
+          },
+          "mobile-capture-enabled": {
+            "enum": ["true", "false"]
+          }
+        }
+      }
+    },
+    {
+      "name": "pl-integer-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "blank-value": {},
+          "correct-answer": {},
+          "display": {
+            "enum": ["block", "inline"]
+          },
+          "placeholder": {},
+          "show-help-text": {
+            "enum": ["true", "false"]
+          },
+          "show-score": {
+            "enum": ["true", "false"]
+          },
+          "size": {},
+          "weight": {}
+        }
+      }
+    },
+    {
+      "name": "pl-matching",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "blank": {
+            "enum": ["true", "false"]
+          },
+          "counter-type": {
+            "enum": ["decimal", "full-text", "lower-alpha", "upper-alpha"]
+          },
+          "fixed-options-order": {
+            "enum": ["true", "false"]
+          },
+          "fixed-order": {
+            "enum": ["true", "false"]
+          },
+          "hide-score-badge": {
+            "enum": ["true", "false"]
+          },
+          "none-of-the-above": {
+            "enum": ["false", "true"]
+          },
+          "number-options": {},
+          "number-statements": {},
+          "options-placement": {
+            "enum": ["bottom", "right"]
+          },
+          "weight": {}
+        }
+      },
+      "children": [
+        {
+          "name": "pl-statement",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "type": "object",
+            "required": ["match"],
+            "properties": {
+              "match": {}
+            }
+          }
+        },
+        {
+          "name": "pl-option",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "type": "object",
+            "properties": {
+              "name": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pl-matrix-component-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "allow-feedback": {
+            "enum": ["true", "false"]
+          },
+          "allow-fractions": {
+            "enum": ["true", "false"]
+          },
+          "allow-partial-credit": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "aria-label": {},
+          "atol": {},
+          "blank-value": {},
+          "comparison": {
+            "enum": ["decdig", "relabs", "sigfig"]
+          },
+          "digits": {},
+          "label": {},
+          "rtol": {},
+          "suffix": {},
+          "weight": {}
+        }
+      }
+    },
+    {
+      "name": "pl-matrix-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-complex": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "aria-label": {},
+          "atol": {},
+          "comparison": {
+            "enum": ["decdig", "relabs", "sigfig"]
+          },
+          "digits": {},
+          "initial-value": {},
+          "label": {},
+          "rtol": {},
+          "show-help-text": {
+            "enum": ["true", "false"]
+          },
+          "weight": {}
+        }
+      }
+    },
+    {
+      "name": "pl-checkbox",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "answers-name": {},
+          "detailed-help-text": {
+            "enum": ["true", "false"]
+          },
+          "display": {
+            "enum": ["block", "inline"]
+          },
+          "hide-answer-panel": {
+            "enum": ["true", "false"]
+          },
+          "hide-help-text": {
+            "enum": ["true", "false"]
+          },
+          "hide-letter-keys": {
+            "enum": ["true", "false"]
+          },
+          "hide-score-badge": {
+            "enum": ["true", "false"]
+          },
+          "max-correct": {},
+          "max-select": {},
+          "min-correct": {},
+          "min-select": {},
+          "number-answers": {},
+          "order": {
+            "enum": ["fixed", "random"]
+          },
+          "partial-credit": {
+            "enum": ["coverage", "each-answer", "false", "net-correct", "off", "true"]
+          },
+          "partial-credit-method": {
+            "enum": ["COV", "EDC", "PC"]
+          },
+          "show-number-correct": {
+            "enum": ["true", "false"]
+          },
+          "weight": {}
+        }
+      },
+      "children": [
+        {
+          "name": "pl-answer",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "properties": {
+              "comment": {},
+              "depends": {},
+              "distractor-feedback": {},
+              "distractor-for": {},
+              "final": {},
+              "indent": {},
+              "initially-placed": {},
+              "ordering-feedback": {},
+              "ranking": {},
+              "score": {},
+              "tag": {},
+              "correct": {
+                "enum": ["false", "true"]
+              },
+              "feedback": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pl-multiple-choice",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "all-of-the-above": {
+            "enum": ["correct", "false", "incorrect", "random", "true"]
+          },
+          "all-of-the-above-feedback": {},
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "aria-label": {},
+          "builtin-grading": {
+            "enum": ["true", "false"]
+          },
+          "display": {
+            "enum": ["block", "dropdown", "inline"]
+          },
+          "hide-letter-keys": {
+            "enum": ["true", "false"]
+          },
+          "hide-score-badge": {
+            "enum": ["true", "false"]
+          },
+          "none-of-the-above": {
+            "enum": ["correct", "false", "incorrect", "random", "true"]
+          },
+          "none-of-the-above-feedback": {},
+          "number-answers": {},
+          "order": {
+            "enum": ["ascend", "descend", "fixed", "random"]
+          },
+          "placeholder": {},
+          "size": {
+          },
+          "weight": {}
+        }
+      },
+      "children": [
+        {
+          "name": "pl-answer",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "properties": {
+              "comment": {},
+              "correct": {
+                "enum": ["false", "true"]
+              },
+              "depends": {},
+              "distractor-feedback": {},
+              "distractor-for": {},
+              "feedback": {},
+              "final": {},
+              "indent": {},
+              "initially-placed": {},
+              "ordering-feedback": {},
+              "ranking": {},
+              "score": {},
+              "tag": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pl-order-blocks",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "code-language": {},
+          "distractor-order": {
+            "enum": ["inherit", "random"]
+          },
+          "feedback": {
+            "enum": ["first-wrong", "first-wrong-verbose", "none"]
+          },
+          "file-name": {},
+          "format": {
+            "enum": ["code", "default"]
+          },
+          "grading-method": {
+            "enum": ["dag", "external", "ordered", "ranking", "unordered"]
+          },
+          "indentation": {
+            "enum": ["true", "false"]
+          },
+          "inline": {
+            "enum": ["true", "false"]
+          },
+          "max-incorrect": {},
+          "max-indent": {},
+          "min-incorrect": {},
+          "partial-credit": {
+            "enum": ["lcs", "none"]
+          },
+          "solution-header": {},
+          "solution-placement": {
+            "enum": ["bottom", "right"]
+          },
+          "source-blocks-order": {
+            "enum": ["alphabetized", "ordered", "random", "random-sections"]
+          },
+          "source-header": {},
+          "weight": {}
+        }
+      },
+      "children": [
+        {
+          "name": "pl-answer",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "type": "object",
+            "properties": {
+              "correct": {
+                "enum": ["false", "true"]
+              },
+              "depends": {},
+              "distractor-feedback": {},
+              "distractor-for": {},
+              "final": {
+                "enum": ["false", "true"]
+              },
+              "indent": {},
+              "ordering-feedback": {},
+              "initially-placed": {
+                "enum": ["true", "false"]
+              },
+              "ranking": {},
+              "tag": {}
+            }
+          }
+        },
+        {
+          "name": "pl-block-group",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "type": "object",
+            "properties": {
+              "depends": {},
+              "tag": {}
+            }
+          },
+          "children": [
+            {
+              "name": "pl-answer",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-06/schema#",
+                "type": "object",
+                "properties": {
+                  "correct": {
+                    "enum": ["false", "true"]
+                  },
+                  "depends": {},
+                  "distractor-feedback": {},
+                  "distractor-for": {},
+                  "final": {
+                    "enum": ["false", "true"]
+                  },
+                  "indent": {},
+                  "ordering-feedback": {},
+                  "initially-placed": {
+                    "enum": ["true", "false"]
+                  },
+                  "ranking": {},
+                  "tag": {}
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pl-number-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "allow-blank": {},
+          "allow-complex": {},
+          "allow-fractions": {},
+          "answers-name": {},
+          "aria-label": {},
+          "atol": {},
+          "blank-value": {},
+          "comparison": {
+            "enum": [
+              "relabs",
+              "sigfig",
+              "decdig"
+            ]
+          },
+          "correct-answer": {},
+          "custom-format": {},
+          "digits": {},
+          "display": {
+            "enum": [
+              "block",
+              "inline"
+            ]
+          },
+          "initial-value": {},
+          "label": {},
+          "placeholder": {},
+          "rtol": {},
+          "show-correct-answer": {},
+          "show-help-text": {},
+          "show-score": {},
+          "size": {},
+          "suffix": {},
+          "weight": {}
+        },
+        "required": [
+          "answers-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-string-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "allow-blank": {},
+          "answers-name": {},
+          "aria-label": {},
+          "correct-answer": {},
+          "display": {
+            "enum": [
+              "block",
+              "inline"
+            ]
+          },
+          "ignore-case": {},
+          "initial-value": {},
+          "label": {},
+          "multiline": {},
+          "normalize-to-ascii": {},
+          "placeholder": {},
+          "remove-leading-trailing": {},
+          "remove-spaces": {},
+          "show-help-text": {},
+          "size": {},
+          "suffix": {},
+          "weight": {}
+        },
+        "required": [
+          "answers-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-symbolic-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "additional-simplifications": {},
+          "allow-blank": {},
+          "allow-complex": {},
+          "allow-sets": {},
+          "allow-trig-functions": {},
+          "answers-name": {},
+          "aria-label": {},
+          "blank-value": {},
+          "correct-answer": {},
+          "custom-functions": {},
+          "display": {
+            "enum": [
+              "block",
+              "inline"
+            ]
+          },
+          "display-log-as-ln": {},
+          "display-simplified-expression": {},
+          "formula-editor": {},
+          "imaginary-unit-for-display": {
+            "enum": [
+              "i",
+              "j"
+            ]
+          },
+          "initial-value": {},
+          "label": {},
+          "placeholder": {},
+          "show-help-text": {},
+          "show-score": {},
+          "size": {},
+          "suffix": {},
+          "variables": {},
+          "weight": {}
+        },
+        "required": [
+          "answers-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-units-input",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "allow-blank": {},
+          "allow-feedback": {},
+          "answers-name": {},
+          "aria-label": {},
+          "atol": {},
+          "blank-value": {},
+          "comparison": {
+            "enum": [
+              "exact",
+              "sigfig",
+              "decdig",
+              "relabs"
+            ]
+          },
+          "correct-answer": {},
+          "custom-format": {},
+          "digits": {},
+          "display": {
+            "enum": [
+              "block",
+              "inline"
+            ]
+          },
+          "grading-mode": {
+            "enum": [
+              "with-units",
+              "exact-units",
+              "only-units"
+            ]
+          },
+          "initial-value": {},
+          "label": {},
+          "magnitude-partial-credit": {},
+          "placeholder": {},
+          "rtol": {},
+          "show-help-text": {},
+          "show-score": {},
+          "size": {},
+          "suffix": {},
+          "weight": {}
+        },
+        "required": [
+          "answers-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-card",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "contents": {},
+          "footer": {},
+          "header": {},
+          "img-bottom-alt": {},
+          "img-bottom-src": {},
+          "img-top-alt": {},
+          "img-top-src": {},
+          "subtitle": {},
+          "title": {},
+          "width": {
+            "enum": [
+              "25%",
+              "50%",
+              "75%",
+              "auto"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "pl-dataframe",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "digits": {},
+          "display-language": {
+            "enum": [
+              "python",
+              "r"
+            ]
+          },
+          "display-variable-name": {},
+          "params-name": {},
+          "presentation-type": {
+            "enum": [
+              "e",
+              "E",
+              "f",
+              "F",
+              "g",
+              "G",
+              "n",
+              "%"
+            ]
+          },
+          "show-dimensions": {},
+          "show-dtype": {},
+          "show-header": {},
+          "show-index": {},
+          "show-python": {},
+          "width": {}
+        },
+        "required": [
+          "params-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-external-grader-variables",
+      "children": [
+        {
+          "name": "pl-variable"
+        }
+      ],
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "empty": {},
+          "params-name": {}
+        }
+      }
+    },
+    {
+      "name": "pl-figure",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": [
+          "file-name"
+        ],
+        "properties": {
+          "alt": {
+            "minLength": 10
+          },
+          "width": {
+            "pattern": "^(?:0|(?:\\d+(?:\\.\\d+)?)(?:%|rch|vw|rem|em|ch|lh|rlh|vmin|vmax))$",
+            "errorMessage": "pl-figure width must be a relative CSS length such as 60%, 8rch, or 40vw."
+          },
+          "directory": {
+            "enum": [
+              "clientFilesQuestion",
+              "clientFilesCourse"
+            ]
+          },
+          "display": {
+            "enum": [
+              "block",
+              "inline"
+            ]
+          },
+          "file-name": {},
+          "type": {
+            "enum": [
+              "static",
+              "dynamic"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "pl-file-download",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "directory": {
+            "enum": [
+              "clientFilesQuestion",
+              "clientFilesCourse"
+            ]
+          },
+          "file-name": {},
+          "force-download": {},
+          "label": {},
+          "type": {
+            "enum": [
+              "static",
+              "dynamic"
+            ]
+          }
+        },
+        "required": [
+          "file-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-file-preview"
+    },
+    {
+      "name": "pl-matrix-latex",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "digits": {},
+          "params-name": {},
+          "presentation-type": {}
+        },
+        "required": [
+          "params-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-python-variable",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "compact-sequences": {},
+          "copy-code-button": {},
+          "depth": {},
+          "indent": {},
+          "no-highlight": {},
+          "params-name": {},
+          "prefix": {},
+          "prefix-newline": {},
+          "show-line-numbers": {},
+          "sort-dicts": {},
+          "suffix": {},
+          "suffix-newline": {},
+          "width": {}
+        },
+        "required": [
+          "params-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-template",
+      "children": [
+        {
+          "name": "pl-variable"
+        }
+      ],
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "directory": {},
+          "file-name": {},
+          "log-tag-warnings": {},
+          "log-variable-warnings": {}
+        },
+        "required": [
+          "file-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-variable-output",
+      "children": [
+        {
+          "name": "pl-variable"
+        },
+        {
+          "name": "variable"
+        }
+      ],
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "default-tab": {
+            "enum": [
+              "matlab",
+              "mathematica",
+              "python",
+              "r",
+              "sympy"
+            ]
+          },
+          "digits": {},
+          "show-mathematica": {},
+          "show-matlab": {},
+          "show-python": {},
+          "show-r": {},
+          "show-sympy": {}
+        }
+      }
+    },
+    {
+      "name": "pl-xss-safe",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "contents": {},
+          "language": {
+            "enum": [
+              "html",
+              "markdown"
+            ]
+          },
+          "source-file-name": {},
+          "submitted-file-name": {}
+        }
+      }
+    },
+    {
+      "name": "pl-overlay",
+      "children": [
+        {
+          "name": "pl-background"
+        },
+        {
+          "name": "pl-location",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "properties": {
+              "bottom": {},
+              "halign": {
+                "enum": [
+                  "left",
+                  "middle",
+                  "center",
+                  "right"
+                ]
+              },
+              "left": {},
+              "right": {},
+              "top": {},
+              "valign": {
+                "enum": [
+                  "top",
+                  "middle",
+                  "center",
+                  "bottom"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "clip": {},
+          "height": {},
+          "width": {}
+        }
+      }
+    },
+    {
+      "name": "pl-external-grader-results"
+    },
+    {
+      "name": "pl-hidden-hints",
+      "children": [
+        {
+          "name": "pl-hint"
+        }
+      ],
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "hint-name": {},
+          "show-after-submission": {}
+        }
+      }
+    },
+    {
+      "name": "pl-hide-in-manual-grading"
+    },
+    {
+      "name": "pl-manual-grading-only"
+    },
+    {
+      "name": "pl-hide-in-answer-panel"
+    },
+    {
+      "name": "pl-workspace"
+    },
+    {
+      "name": "pl-hide-in-panel",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "answer": {},
+          "question": {},
+          "submission": {}
+        }
+      }
+    },
+    {
+      "name": "pl-dropdown",
+      "children": [
+        {
+          "name": "pl-answer",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "properties": {
+              "comment": {},
+              "correct": {},
+              "depends": {},
+              "distractor-feedback": {},
+              "distractor-for": {},
+              "feedback": {},
+              "final": {},
+              "indent": {},
+              "initially-placed": {},
+              "ordering-feedback": {},
+              "ranking": {},
+              "score": {},
+              "tag": {}
+            }
+          }
+        }
+      ],
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "allow-blank": {},
+          "answers-name": {},
+          "aria-label": {},
+          "blank": {},
+          "sort": {
+            "enum": [
+              "random",
+              "ascend",
+              "descend",
+              "fixed"
+            ]
+          },
+          "weight": {}
+        },
+        "required": [
+          "answers-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-prairiedraw-figure",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "height": {},
+          "param-names": {},
+          "script-name": {},
+          "width": {}
+        }
+      }
+    },
+    {
+      "name": "pl-variable-score",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "properties": {
+          "answers-name": {}
+        },
+        "required": [
+          "answers-name"
+        ]
+      }
+    },
+    {
+      "name": "pl-matrix-output",
+      "children": [
+        {
+          "name": "variable"
+        }
+      ]
+    },
+    {
+      "name": "pl-drawing",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "anyOf": [
+          {
+            "not": {
+              "properties": {
+                "gradable": {
+                  "const": "true"
+                }
+              },
+              "required": ["gradable"]
+            }
+          },
+          {
+            "required": ["answers-name"]
+          }
+        ],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "angle-tol": {},
+          "answers-name": {},
+          "aria-description": {},
+          "aria-label": {},
+          "correct-answer": {},
+          "disregard-extra-elements": {
+            "enum": ["true", "false"]
+          },
+          "gradable": {
+            "enum": ["false", "true"]
+          },
+          "grid-size": {},
+          "height": {},
+          "hide-answer-panel": {
+            "enum": ["true", "false"]
+          },
+          "show-score": {
+            "enum": ["true", "false"]
+          },
+          "show-tolerance-hint": {
+            "enum": ["true", "false"]
+          },
+          "snap-to-grid": {
+            "enum": ["true", "false"]
+          },
+          "tol": {},
+          "tolerance-hint": {},
+          "weight": {},
+          "width": {}
+        }
+      },
+      "children": [
+        {
+          "name": "pl-drawing-answer",
+          "children": [
+            {
+              "name": "pl-drawing-group",
+              "children": [
+                {
+                  "name": "pl-drawing-group",
+                  "schema": {
+                    "$schema": "http://json-schema.org/draft-06/schema#",
+                    "properties": {
+                      "visible": {}
+                    }
+                  }
+                },
+                {
+                  "name": "pl-3pointrod"
+                },
+                {
+                  "name": "pl-4pointrod"
+                },
+                {
+                  "name": "pl-arc"
+                },
+                {
+                  "name": "pl-arc-dimensions"
+                },
+                {
+                  "name": "pl-arc-vector"
+                },
+                {
+                  "name": "pl-axes"
+                },
+                {
+                  "name": "pl-battery"
+                },
+                {
+                  "name": "pl-capacitor"
+                },
+                {
+                  "name": "pl-circle"
+                },
+                {
+                  "name": "pl-clamped"
+                },
+                {
+                  "name": "pl-coil"
+                },
+                {
+                  "name": "pl-collar-rod"
+                },
+                {
+                  "name": "pl-controlled-curved-line"
+                },
+                {
+                  "name": "pl-controlled-line"
+                },
+                {
+                  "name": "pl-coordinates"
+                },
+                {
+                  "name": "pl-dimensions"
+                },
+                {
+                  "name": "pl-distributed-load"
+                },
+                {
+                  "name": "pl-double-headed-vector"
+                },
+                {
+                  "name": "pl-fixed-pin"
+                },
+                {
+                  "name": "pl-graph-line"
+                },
+                {
+                  "name": "pl-inductor"
+                },
+                {
+                  "name": "pl-line"
+                },
+                {
+                  "name": "pl-paired-vector"
+                },
+                {
+                  "name": "pl-point"
+                },
+                {
+                  "name": "pl-polygon"
+                },
+                {
+                  "name": "pl-pulley"
+                },
+                {
+                  "name": "pl-rectangle"
+                },
+                {
+                  "name": "pl-resistor"
+                },
+                {
+                  "name": "pl-rod"
+                },
+                {
+                  "name": "pl-roller"
+                },
+                {
+                  "name": "pl-spring"
+                },
+                {
+                  "name": "pl-switch"
+                },
+                {
+                  "name": "pl-text"
+                },
+                {
+                  "name": "pl-triangle"
+                },
+                {
+                  "name": "pl-vector"
+                }
+              ],
+              "allowAdditionalChildren": true,
+              "schema": {
+                "$schema": "http://json-schema.org/draft-06/schema#",
+                "properties": {
+                  "visible": {}
+                }
+              }
+            },
+            {
+              "name": "pl-3pointrod"
+            },
+            {
+              "name": "pl-4pointrod"
+            },
+            {
+              "name": "pl-arc"
+            },
+            {
+              "name": "pl-arc-dimensions"
+            },
+            {
+              "name": "pl-arc-vector"
+            },
+            {
+              "name": "pl-axes"
+            },
+            {
+              "name": "pl-battery"
+            },
+            {
+              "name": "pl-capacitor"
+            },
+            {
+              "name": "pl-circle"
+            },
+            {
+              "name": "pl-clamped"
+            },
+            {
+              "name": "pl-coil"
+            },
+            {
+              "name": "pl-collar-rod"
+            },
+            {
+              "name": "pl-controlled-curved-line"
+            },
+            {
+              "name": "pl-controlled-line"
+            },
+            {
+              "name": "pl-coordinates"
+            },
+            {
+              "name": "pl-dimensions"
+            },
+            {
+              "name": "pl-distributed-load"
+            },
+            {
+              "name": "pl-double-headed-vector"
+            },
+            {
+              "name": "pl-fixed-pin"
+            },
+            {
+              "name": "pl-graph-line"
+            },
+            {
+              "name": "pl-inductor"
+            },
+            {
+              "name": "pl-line"
+            },
+            {
+              "name": "pl-paired-vector"
+            },
+            {
+              "name": "pl-point"
+            },
+            {
+              "name": "pl-polygon"
+            },
+            {
+              "name": "pl-pulley"
+            },
+            {
+              "name": "pl-rectangle"
+            },
+            {
+              "name": "pl-resistor"
+            },
+            {
+              "name": "pl-rod"
+            },
+            {
+              "name": "pl-roller"
+            },
+            {
+              "name": "pl-spring"
+            },
+            {
+              "name": "pl-switch"
+            },
+            {
+              "name": "pl-text"
+            },
+            {
+              "name": "pl-triangle"
+            },
+            {
+              "name": "pl-vector"
+            }
+          ],
+          "allowAdditionalChildren": true,
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "properties": {
+              "draw-error-box": {}
+            }
+          }
+        },
+        {
+          "name": "pl-drawing-initial",
+          "children": [
+            {
+              "name": "pl-drawing-group",
+              "children": [
+                {
+                  "name": "pl-drawing-group",
+                  "schema": {
+                    "$schema": "http://json-schema.org/draft-06/schema#",
+                    "properties": {
+                      "visible": {}
+                    }
+                  }
+                },
+                {
+                  "name": "pl-3pointrod"
+                },
+                {
+                  "name": "pl-4pointrod"
+                },
+                {
+                  "name": "pl-arc"
+                },
+                {
+                  "name": "pl-arc-dimensions"
+                },
+                {
+                  "name": "pl-arc-vector"
+                },
+                {
+                  "name": "pl-axes"
+                },
+                {
+                  "name": "pl-battery"
+                },
+                {
+                  "name": "pl-capacitor"
+                },
+                {
+                  "name": "pl-circle"
+                },
+                {
+                  "name": "pl-clamped"
+                },
+                {
+                  "name": "pl-coil"
+                },
+                {
+                  "name": "pl-collar-rod"
+                },
+                {
+                  "name": "pl-controlled-curved-line"
+                },
+                {
+                  "name": "pl-controlled-line"
+                },
+                {
+                  "name": "pl-coordinates"
+                },
+                {
+                  "name": "pl-dimensions"
+                },
+                {
+                  "name": "pl-distributed-load"
+                },
+                {
+                  "name": "pl-double-headed-vector"
+                },
+                {
+                  "name": "pl-fixed-pin"
+                },
+                {
+                  "name": "pl-graph-line"
+                },
+                {
+                  "name": "pl-inductor"
+                },
+                {
+                  "name": "pl-line"
+                },
+                {
+                  "name": "pl-paired-vector"
+                },
+                {
+                  "name": "pl-point"
+                },
+                {
+                  "name": "pl-polygon"
+                },
+                {
+                  "name": "pl-pulley"
+                },
+                {
+                  "name": "pl-rectangle"
+                },
+                {
+                  "name": "pl-resistor"
+                },
+                {
+                  "name": "pl-rod"
+                },
+                {
+                  "name": "pl-roller"
+                },
+                {
+                  "name": "pl-spring"
+                },
+                {
+                  "name": "pl-switch"
+                },
+                {
+                  "name": "pl-text"
+                },
+                {
+                  "name": "pl-triangle"
+                },
+                {
+                  "name": "pl-vector"
+                }
+              ],
+              "allowAdditionalChildren": true,
+              "schema": {
+                "$schema": "http://json-schema.org/draft-06/schema#",
+                "properties": {
+                  "visible": {}
+                }
+              }
+            },
+            {
+              "name": "pl-3pointrod"
+            },
+            {
+              "name": "pl-4pointrod"
+            },
+            {
+              "name": "pl-arc"
+            },
+            {
+              "name": "pl-arc-dimensions"
+            },
+            {
+              "name": "pl-arc-vector"
+            },
+            {
+              "name": "pl-axes"
+            },
+            {
+              "name": "pl-battery"
+            },
+            {
+              "name": "pl-capacitor"
+            },
+            {
+              "name": "pl-circle"
+            },
+            {
+              "name": "pl-clamped"
+            },
+            {
+              "name": "pl-coil"
+            },
+            {
+              "name": "pl-collar-rod"
+            },
+            {
+              "name": "pl-controlled-curved-line"
+            },
+            {
+              "name": "pl-controlled-line"
+            },
+            {
+              "name": "pl-coordinates"
+            },
+            {
+              "name": "pl-dimensions"
+            },
+            {
+              "name": "pl-distributed-load"
+            },
+            {
+              "name": "pl-double-headed-vector"
+            },
+            {
+              "name": "pl-fixed-pin"
+            },
+            {
+              "name": "pl-graph-line"
+            },
+            {
+              "name": "pl-inductor"
+            },
+            {
+              "name": "pl-line"
+            },
+            {
+              "name": "pl-paired-vector"
+            },
+            {
+              "name": "pl-point"
+            },
+            {
+              "name": "pl-polygon"
+            },
+            {
+              "name": "pl-pulley"
+            },
+            {
+              "name": "pl-rectangle"
+            },
+            {
+              "name": "pl-resistor"
+            },
+            {
+              "name": "pl-rod"
+            },
+            {
+              "name": "pl-roller"
+            },
+            {
+              "name": "pl-spring"
+            },
+            {
+              "name": "pl-switch"
+            },
+            {
+              "name": "pl-text"
+            },
+            {
+              "name": "pl-triangle"
+            },
+            {
+              "name": "pl-vector"
+            }
+          ],
+          "allowAdditionalChildren": true,
+          "schema": {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "properties": {
+              "draw-error-box": {}
+            }
+          }
+        },
+        {
+          "name": "pl-controls",
+          "children": [
+            {
+              "name": "pl-drawing-button"
+            },
+            {
+              "name": "pl-controls-group",
+              "children": [
+                {
+                  "name": "pl-drawing-button"
+                }
+              ],
+              "schema": {
+                "$schema": "http://json-schema.org/draft-06/schema#",
+                "properties": {
+                  "label": {}
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pl-sketch",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "object",
+        "required": ["answers-name"],
+        "properties": {
+          "allow-blank": {
+            "enum": ["true", "false"]
+          },
+          "answers-name": {},
+          "enforce-bounds": {
+            "enum": ["true", "false"]
+          },
+          "height": {},
+          "overlay-solution": {
+            "enum": ["true", "false"]
+          },
+          "read-only": {
+            "enum": ["true", "false"]
+          },
+          "weight": {},
+          "width": {},
+          "x-range": {},
+          "y-range": {}
+        }
+      },
+      "children": [
+        {
+          "name": "pl-sketch-grade"
+        },
+        {
+          "name": "pl-sketch-initial"
+        },
+        {
+          "name": "pl-sketch-solution"
+        },
+        {
+          "name": "pl-sketch-tool"
+        }
+      ]
+    },
+    {
+      "name": "clickable-image"
+    },
+    {
+      "name": "course-element"
+    },
+    {
+      "name": "extendable-element"
+    },
+    {
+      "name": "math-field"
+    },
+    // Custom Elements
+    {
+      "name": "pl-proof-yaml"
+    }
+  ]
+}
