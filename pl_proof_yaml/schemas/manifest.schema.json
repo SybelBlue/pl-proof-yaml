@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/manifest.schema.json",
+  "title": "ProofDB manifest YAML",
+  "description": "a listing of proof files",
+  "type": "object",
+  "required": [
+    "proofs"
+  ],
+  "properties": {
+    "proofs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "\\.proof(\\.yaml)?$"
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/proofdb.schema.json",
+  "title": "ProofDB YAML",
+  "description": "a database of proofs",
+  "oneOf": [
+    {
+      "$ref": "proof.schema.json"
+    },
+    {
+      "$ref": "proofs.schema.json"
+    },
+    {
+      "$ref": "manifest.schema.json"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<pl-order-blocks
+  answers-name="{{answers_name}}"
+  {{#grading_method}} grading-method="{{grading_method}}"{{/grading_method}}
+  {{#source_blocks_order}} source-blocks-order="{{source_blocks_order}}"{{/source_blocks_order}}
+  {{#distractor_order}} distractor-order="{{distractor_order}}"{{/distractor_order}}
+  {{#partial_credit}} partial-credit="{{partial_credit}}"{{/partial_credit}}
+  {{#feedback}} feedback="{{feedback}}"{{/feedback}}
+  {{#source_header}} source-header="{{source_header}}"{{/source_header}}
+  {{#solution_header}} solution-header="{{solution_header}}"{{/solution_header}}
+  {{#solution_placement}} solution-placement="{{solution_placement}}"{{/solution_placement}}
+  {{#max_incorrect}} max-incorrect="{{max_incorrect}}"{{/max_incorrect}}
+  {{#min_incorrect}} min-incorrect="{{min_incorrect}}"{{/min_incorrect}}
+  {{#weight}} weight="{{weight}}"{{/weight}}
+  {{#inline}} inline="{{inline}}"{{/inline}}
+  {{#display_blocks}} display-blocks="{{display_blocks}}"{{/display_blocks}}
+  {{#allow_blank}} allow-blank="{{allow_blank}}"{{/allow_blank}}
+>
+  {{#blocks}}
+    <pl-answer
+      correct="{{correct}}"
+      {{#emit_dag_attrs}} tag="{{tag}}"{{#has_depends}} depends="{{depends}}"{{/has_depends}}{{#distractor_for}} distractor-for="{{distractor_for}}"{{/distractor_for}}{{/emit_dag_attrs}}
+    >
+      {{#parts}}
+        {{#text}}{{text}}{{/text}}
+        {{#dropdown}}{{> pl-proof-yaml-multiple-choice}}{{/dropdown}}
+      {{/parts}}
+    </pl-answer>
+  {{/blocks}}
+</pl-order-blocks>
