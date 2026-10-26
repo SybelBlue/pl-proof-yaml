@@ -343,6 +343,45 @@ def _render_multiple_choice(dropdown: BlankDropdown) -> str:
     )
 
 
+def _selected_dropdown_answer_names(
+    selected_blocks: object, dropdowns: list[BlankDropdown]
+) -> set[str]:
+    if not isinstance(selected_blocks, list):
+        return set()
+
+    known_names = {dropdown.answers_name for dropdown in dropdowns}
+    selected_names: set[str] = set()
+    for block in selected_blocks:
+        if not isinstance(block, dict) or not isinstance(
+            inner_html := block.get("inner_html"), str
+        ):
+            continue
+
+        fragment = lxml.html.fragment_fromstring(inner_html, create_parent=True)
+        selected_names.update(
+            name
+            for dropdown in fragment.xpath(".//pl-multiple-choice")
+            if (name := dropdown.get("answers-name")) in known_names
+        )
+
+    return selected_names
+
+
+def _validate_selected_dropdowns(
+    answers_name: str, dropdowns: list[BlankDropdown], data: dict[str, Any]
+) -> None:
+    if answers_name in data["format_errors"]:
+        return
+
+    selected_names = _selected_dropdown_answer_names(
+        data["submitted_answers"].get(answers_name), dropdowns
+    )
+    if any(not data["submitted_answers"].get(name) for name in selected_names):
+        data["format_errors"][answers_name] = (
+            "All selection boxes in the submitted blocks must have an answer."
+        )
+
+
 def _find_element_controller(element_name: str) -> Path:
     controller_name = f"{element_name}.py"
     candidates = [
@@ -520,6 +559,10 @@ def parse(element_html: str | bytes, data: dict[str, Any]) -> None:
     multiple_choice = _load_element_controller("pl-multiple-choice")
     for dropdown in dropdowns:
         multiple_choice.parse(_render_multiple_choice(dropdown), data)
+
+    element = lxml.html.fragment_fromstring(element_html)
+    answers_name = cast(str, _get_string_attrib(element, "answers-name"))
+    _validate_selected_dropdowns(answers_name, dropdowns, data)
 
 
 @_with_debug_logging
