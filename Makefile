@@ -1,4 +1,4 @@
-.PHONY: help check parse lint lint-python lint-yaml lint-prettier format-proofs format-prettier test test-unit test-render-performance clean
+.PHONY: help deps check parse lint lint-python lint-yaml lint-prettier format-proofs format-prettier test test-unit test-render-performance clean
 
 UV ?= uv
 UV_CACHE_DIR ?= .uv-cache
@@ -13,6 +13,7 @@ PY_FILES := $(shell find elements/pl-proof-yaml/pl_proof_yaml -name '*.py' -not 
 help:
 	@printf '%s\n' \
 		'Targets:' \
+		'  deps         Sync the uv environment and vendored dependencies' \
 		'  check        Run parser validation, linters, and tests' \
 		'  parse        Parse all .proof, .proofs, and .manifest files' \
 		'  lint         Run Python syntax checks, YAML proof linting, and Prettier checks' \
@@ -26,6 +27,10 @@ help:
 		'  test-unit    Run pytest filtered to proof_yaml_parser tests' \
 		'  test-render-performance  Benchmark end-to-end rendering of contradiction proofs' \
 		'  clean        Remove Python cache directories'
+
+deps:
+	$(UV) sync
+	$(UV_RUN) pl-vendor sync
 
 check: parse lint test
 

@@ -1,4 +1,5 @@
 {
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
   "yaml.schemas": {
     "./elements/pl-proof-yaml/pl_proof_yaml/schemas/proof.schema.json": [
       "/**/*.proof",

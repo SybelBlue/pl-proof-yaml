@@ -24,6 +24,7 @@ pl_proof_yaml = ["*.mustache", "schemas/*.json"]
 extraPaths = ["elements/pl-proof-yaml"]
 venvPath = "."
 venv = ".venv"
+pythonVersion = "3.13"
 reportMissingModuleSource = false
 
 [tool.pl-vendor]
