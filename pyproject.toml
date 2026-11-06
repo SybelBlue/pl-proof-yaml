@@ -28,7 +28,7 @@ pythonVersion = "3.13"
 reportMissingModuleSource = false
 
 [tool.pl-vendor]
-required-version = "^0.4"
+schema-version = 3
 
 [tool.pl-vendor.packages.pyyaml]
 path = "elements/pl-proof-yaml/pl_proof_yaml/proof_yaml_parser/yaml"
@@ -37,9 +37,4 @@ commit = "49790e73684bebad1df05ef8d828fa12f685bffb"
 subdirectory = "lib/yaml"
 
 [dependency-groups]
-dev = [
-    "pyfakefs>=6.2.0",
-    "pytest>=9.1.1",
-    "lxml",
-    "pl-vendor>=0.4.5,<0.5",
-]
+dev = ["pyfakefs>=6.2.0", "pytest>=9.1.1", "lxml", "pl-vendor>=0.6.0"]
