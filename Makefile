@@ -1,4 +1,4 @@
-.PHONY: help deps check parse lint lint-python lint-yaml lint-prettier format-proofs format-prettier test test-unit test-render-performance clean
+.PHONY: help deps check parse lint lint-python lint-yaml lint-prettier format-proofs format-prettier release release-push test test-unit test-render-performance clean
 
 UV ?= uv
 UV_CACHE_DIR ?= .uv-cache
@@ -23,6 +23,8 @@ help:
 		'  format       Rewrite all proofs and then format with prettier' \
 		'  format-proofs  Rewrite all proofs with proof_yaml_parser.linter' \
 		'  format-prettier Format .proof, .proofs, and .manifest files with Prettier as YAML' \
+		'  release      Rebuild the local release branch' \
+		'  release-push Rebuild and push the release branch' \
 		'  test         Run pytest' \
 		'  test-unit    Run pytest filtered to proof_yaml_parser tests' \
 		'  test-render-performance  Benchmark end-to-end rendering of contradiction proofs' \
@@ -55,6 +57,12 @@ format-proofs:
 
 format-prettier:
 	$(PRETTIER) --write --parser yaml $(PROOF_DB_GLOBS)
+
+release:
+	$(UV) run --locked pl-vendor release build
+
+release-push:
+	$(UV) run --locked pl-vendor release build --push
 
 test:
 	$(PYTEST)

@@ -1,0 +1,20 @@
+version = 2
+source_branch = "main"
+target_branch = "release"
+history_source = "elements/pl-proof-yaml"
+
+[[include]]
+source = "elements/pl-proof-yaml"
+destination = "."
+
+[[include]]
+source = "README.md"
+destination = "README.md"
+
+[[include]]
+source = "LICENSE"
+destination = "LICENSE"
+
+[[include]]
+source = ".gitignore"
+destination = ".gitignore"
