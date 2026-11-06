@@ -33,8 +33,8 @@ schema-version = 3
 [tool.pl-vendor.packages.pyyaml]
 path = "elements/pl-proof-yaml/pl_proof_yaml/proof_yaml_parser/yaml"
 url = "https://github.com/yaml/pyyaml.git"
-commit = "49790e73684bebad1df05ef8d828fa12f685bffb"
+version = ">=6,<7"
 subdirectory = "lib/yaml"
 
 [dependency-groups]
-dev = ["pyfakefs>=6.2.0", "pytest>=9.1.1", "lxml", "pl-vendor>=0.6.0"]
+dev = ["pyfakefs>=6.2.0", "pytest>=9.1.1", "lxml", "pl-vendor>=0.6.4"]

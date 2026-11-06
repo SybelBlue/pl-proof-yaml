@@ -42,22 +42,23 @@ Replace `<repository-url>` with this repository's Git URL. `uv sync` creates a l
 
 ### Vendored PyYAML
 
-The parser's `yaml` package comes from PyYAML's `lib/yaml` directory. Its source
-commit and destination are declared in `pyproject.toml`, and
-`plvendor-lock.yaml` records the exact revision. The patch in
+The parser's `yaml` package comes from PyYAML's `lib/yaml` directory. Its 6.x
+release range and destination are declared in `pyproject.toml`, and
+`plvendor.lock` records the exact release tag and revision. The patch in
 `.vendor-patches/pyyaml.patch` keeps the optional C extension import relative to
 this nested package and preserves the existing file contents.
 
 Check that the committed copy is reproducible with:
 
 ```sh
-uv run --locked pl-vendor verify
+uv run --locked pl-vendor check installed
 ```
 
-To update PyYAML, change the full release commit in `pyproject.toml`, then run
+To update PyYAML to the latest compatible 6.x release, run
 `uv run pl-vendor update pyyaml`. Review the source diff, adjust the patch if
-needed, and run `uv run --locked pl-vendor verify` and `make test-unit` before
-committing the manifest, lockfile, patch, and generated files together.
+needed, and run `uv run --locked pl-vendor check installed` and
+`make test-unit` before committing the manifest, lockfile, patch, and generated
+files together.
 
 ### Get started in VS Code
 

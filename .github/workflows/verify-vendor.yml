@@ -28,4 +28,4 @@ jobs:
         run: uv sync --locked --only-dev
 
       - name: Verify vendored dependencies
-        run: uv run --locked --no-sync pl-vendor verify
+        run: uv run --locked --no-sync pl-vendor check installed

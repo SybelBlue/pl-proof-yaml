@@ -3,3 +3,5 @@ version = 4
 [[package]]
 name = "pyyaml"
 revision = "49790e73684bebad1df05ef8d828fa12f685bffb"
+version = "6.0.3"
+tag = "6.0.3"
