@@ -16,6 +16,7 @@ from typing import Any, cast
 import chevron
 import lxml.html
 import prairielearn as pl
+from prairielearn.internal import question_phases as pl_question_phases
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 
@@ -385,6 +386,7 @@ def _validate_selected_dropdowns(
 def _find_element_controller(element_name: str) -> Path:
     controller_name = f"{element_name}.py"
     candidates = [
+        Path(pl_question_phases.CORE_ELEMENTS_PATH) / element_name / controller_name,
         Path.cwd() / "elements" / element_name / controller_name,
         Path.cwd()
         / "apps"
