@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "allow-blank": {
+      "type": "string",
+      "format": "boolean"
+    },
+    "answers-name": {
+      "type": "string"
+    },
+    "directory": {
+      "default": "serverFilesCourse",
+      "type": "string",
+      "enum": ["clientFilesCourse", "clientFilesQuestion", "question", "serverFilesCourse"]
+    },
+    "display-blocks": {
+      "type": "string",
+      "enum": ["vertical", "inline-wrap", "inline-nowrap"]
+    },
+    "feedback": {
+      "type": "string",
+      "enum": ["none", "first-wrong", "first-wrong-verbose"]
+    },
+    "grading-method": {
+      "default": "dag",
+      "type": "string",
+      "enum": ["unordered", "ordered", "ranking", "dag", "external"]
+    },
+    "hide-problem-statement": {
+      "default": "false",
+      "type": "string",
+      "format": "boolean"
+    },
+    "include-distractors": {
+      "type": "string",
+      "format": "boolean"
+    },
+    "inline": {
+      "type": "string",
+      "format": "boolean",
+      "deprecated": true,
+      "description": "Use the \"display-blocks\" attribute instead."
+    },
+    "partial-credit": {
+      "type": "string",
+      "enum": ["none", "lcs"]
+    },
+    "proof-dir": {
+      "type": "string"
+    },
+    "proof-file": {
+      "type": "string"
+    },
+    "proof-index": {
+      "default": "0",
+      "type": "string",
+      "format": "integer"
+    },
+    "solution-header": {
+      "type": "string"
+    },
+    "solution-placement": {
+      "type": "string",
+      "enum": ["right", "bottom"]
+    },
+    "source-blocks-order": {
+      "default": "random-sections",
+      "type": "string",
+      "enum": ["random", "alphabetized", "ordered", "random-sections"]
+    },
+    "source-header": {
+      "type": "string"
+    },
+    "weight": {
+      "type": "string",
+      "format": "integer"
+    }
+  },
+  "required": ["answers-name"],
+  "oneOf": [{ "required": ["proof-file"] }, { "required": ["proof-dir"] }],
+  "additionalProperties": false
+}
